@@ -1,31 +1,40 @@
-# Getting Started
+# Configuration-Server
 
-### Reference Documentation
+## Why?
+TODO 
 
-For further reference, please consider the following sections:
+## Local (not Git)
+TODO
 
-* [Official Gradle documentation](https://docs.gradle.org)
-* [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.3/gradle-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.7.3/gradle-plugin/reference/html/#build-image)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.7.3/reference/htmlsingle/#web.security)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.7.3/reference/htmlsingle/#web)
-* [Config Server](https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_spring_cloud_config_server)
+## Containerize
 
-### Guides
+### Local registry
 
-The following guides illustrate how to use some features concretely:
+The [Docker Registry 2.0](https://hub.docker.com/_/registry/) implementation for storing and distributing Docker images.
 
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Centralized Configuration](https://spring.io/guides/gs/centralized-configuration/)
+```shell
+docker run -d -p 5000:5000 --restart always --name registry registry:2
+```
+
+### Build and push container 
+Jib is a [Gradle](https://gradle.org/) plugin for building Docker and [OCI](https://github.com/opencontainers/image-spec) images for your Java applications.
+
+```groovy
+plugins {
+    '...'
+    id 'com.google.cloud.tools.jib' version '3.3.0'
+    '...'
+}
+
+
+jib.allowInsecureRegistries = true
+jib.to.image = "localhost:5000/${project.name}:${project.version}"
+
+tasks.build.dependsOn tasks.jib
+```
+
+Every time the build-Task is called the image gets build as well and pushed to the registry
+
 
 ### Additional Links
-
-These additional references should also help you:
-
-* [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
-
+[Syntax Markdown](https://www.markdownguide.org/extended-syntax/)

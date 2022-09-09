@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.3'
     id 'io.spring.dependency-management' version '1.0.13.RELEASE'
     id 'java'
+    id 'com.google.cloud.tools.jib' version '3.3.0'
 }
 
 group = 'de.sebastianherbst'
@@ -33,3 +34,28 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+jib.allowInsecureRegistries = true
+jib.to.image = "localhost:5000/${project.name}:${project.version}"
+
+/*
+jib {
+    allowInsecureRegistries = true
+    from {
+        image = 'openjdk:alpine'
+    }
+    to {
+        image = "localhost:5000/${project.name}:${project.version}"
+        tags = ['latest']
+    }
+    container {
+        jvmFlags = ['-Xms512m', '-Xdebug']
+        mainClass = 'de.sebastianherbst.configserver.ConfigServerApplication'
+        ports = ['8888']
+        format = 'OCI'
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
+}
+*/
+
+tasks.build.dependsOn tasks.jib
