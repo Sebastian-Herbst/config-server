@@ -5,9 +5,9 @@ pipeline {
     }
     stages {
         stage('Checkout Code') {
-            steps {
-                git(branch: 'main', url: 'https://github.com/Sebastian-Herbst/config-server.git')
-            }
+          steps {
+            git(branch: 'main', url: 'https://github.com/Sebastian-Herbst/config-server.git')
+          }
         }
 
         stage('List directory') {
@@ -18,19 +18,22 @@ pipeline {
                     }
                 }
 
-                stage('Unit & Integration Tests') {
-                    steps {
-                        script {
-                            try {
-                                sh './gradlew clean test --no-daemon' //run a gradle task
-                            } finally {
-                                junit '**/build/test-results/test/*.xml'
-                                //make the junit test results available in any case (success & failure)
-                            }
-                        }
-                    }
-                }
+        stage('Unit & Integration Tests') {
+          steps {
+            script {
+              try {
+                sh './gradlew clean test --no-daemon' //run a gradle task
+              } finally {
+                junit '**/build/test-results/test/*.xml'
+                //make the junit test results available in any case (success & failure)
+              }
             }
+
+          }
         }
+
+      }
     }
+
+  }
 }
