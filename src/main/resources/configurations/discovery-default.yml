@@ -1,0 +1,13 @@
+server.port: 8999
+spring:
+  application.name: discovery
+  redis:
+    host: localhost
+    port: 6379
+
+eureka:
+  instance.hostname: localhost
+  client:
+    serviceUrl.defaultZone: http://user:secret@localhost:8999/eureka/
+    register-with-eureka: false
+    fetch-registry: false

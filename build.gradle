@@ -36,7 +36,7 @@ tasks.named('test') {
 }
 
 jib.allowInsecureRegistries = true
-jib.to.image = "localhost:5000/${project.name}:${project.version}"
+jib.to.image = "raspberrypi-dev:5000/${project.name}:${project.version}"
 
 /*
 jib {
