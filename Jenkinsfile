@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        jdk 'AdoptJDK17'
+    }
     stages {
         stage('Checkout Code') {
             steps {
