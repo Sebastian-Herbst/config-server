@@ -7,5 +7,22 @@ pipeline {
       }
     }
 
+    stage('List directory') {
+      parallel {
+        stage('List directory') {
+          steps {
+            sh 'ls -la'
+          }
+        }
+
+        stage('Package') {
+          steps {
+            withGradle()
+          }
+        }
+
+      }
+    }
+
   }
 }
