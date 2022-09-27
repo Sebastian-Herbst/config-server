@@ -36,6 +36,7 @@ tasks.named('test') {
 }
 
 jib.allowInsecureRegistries = true
+jib.container.creationTime = 'USE_CURRENT_TIMESTAMP'
 jib.to.image = "raspberrypi-dev:11001/${project.name}:${project.version}"
 
 /*
